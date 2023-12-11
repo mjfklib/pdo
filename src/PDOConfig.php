@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace mjfklib\PDO;
 
-use mjfklib\Container\ArrayValue;
+use mjfklib\Utils\ArrayValue;
 use mjfklib\Container\Env;
 
 class PDOConfig
@@ -25,10 +25,9 @@ class PDOConfig
             $env[static::PDO_DSN] ?? '',
             $env[static::PDO_USER] ?? null,
             $env[static::PDO_PASS] ?? null,
-            ArrayValue::getArrayNull(
-                [static::PDO_OPTIONS => $env[static::PDO_OPTIONS] ?? null],
-                static::PDO_OPTIONS
-            )
+            isset($env[static::PDO_OPTIONS])
+                ? ArrayValue::convertToArray($env[static::PDO_OPTIONS])
+                : null
         );
     }
 
